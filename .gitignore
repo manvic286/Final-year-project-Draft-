@@ -1,2 +1,5 @@
 # Node.js dependencies
 node_modules/
+
+git rm -r --cached node_modules
+git commit -m "Remove node_modules from tracking"
