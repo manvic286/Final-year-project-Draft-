@@ -1,0 +1,97 @@
+/* public/css/dashboard.css */
+.dashboard-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 1rem;
+  }
+  
+  .dashboard-container h2 {
+    color: #4a69bd;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #eee;
+  }
+  
+  .dashboard-info {
+    background-color: #f8f9fa;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+  }
+  
+  .dashboard-info p {
+    margin-bottom: 0.5rem;
+  }
+  
+  .highlight {
+    font-weight: bold;
+    color: #4a69bd;
+    text-transform: capitalize;
+  }
+  
+  .dashboard-sections {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+  
+  .dashboard-section {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+  }
+  
+  .dashboard-section h3 {
+    color: #4a69bd;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+  }
+  
+  .course-list {
+    list-style-type: none;
+  }
+  
+  .course-list li {
+    margin-bottom: 0.8rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .course-list li:last-child {
+    border-bottom: none;
+  }
+  
+  .course-list a {
+    color: #333;
+    text-decoration: none;
+  }
+  
+  .course-list a:hover {
+    color: #4a69bd;
+  }
+  
+  .empty-message {
+    color: #777;
+    font-style: italic;
+  }
+  
+  .btn {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background-color: #4a69bd;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    margin-top: 1rem;
+  }
+  
+  .btn:hover {
+    background-color: #3c5aa6;
+  }
+  
+  @media (max-width: 768px) {
+    .dashboard-sections {
+      grid-template-columns: 1fr;
+    }
+  }

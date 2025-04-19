@@ -1,0 +1,66 @@
+/* public/css/style.css */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    color: #333;
+  }
+  
+  header {
+    background-color: #4a69bd;
+    color: white;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  nav ul {
+    display: flex;
+    list-style: none;
+  }
+  
+  nav ul li {
+    margin-left: 1rem;
+  }
+  
+  nav a {
+    color: white;
+    text-decoration: none;
+  }
+  
+  nav a:hover {
+    text-decoration: underline;
+  }
+  
+  .profile-pic {
+    width: 27px;
+  }
+  
+  main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+  
+  .welcome {
+    text-align: center;
+    margin: 3rem 0;
+  }
+  
+  .welcome h2 {
+    margin-bottom: 1rem;
+    color: #4a69bd;
+  }
+  
+  footer {
+    text-align: center;
+    padding: 1rem;
+    background-color: #f8f9fa;
+    margin-top: 2rem;
+  }

@@ -1,0 +1,136 @@
+<!-- views/create-course.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Course - Collaborative Learning Platform</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/courses.css">
+</head>
+<body>
+  <header>
+    <h1>Collaborative Learning Platform</h1>
+    <nav>
+      <ul>
+        <li><a href="/dashboard">Dashboard</a></li>
+        <li><a href="/courses" class="active">Courses</a></li>
+        <li><a href="/profile">Profile</a></li>
+        <li><a href="#" id="logout-link">Logout</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <div class="form-container">
+      <h2>Create New Course</h2>
+      <form id="create-course-form">
+        <div class="form-group">
+          <label for="title">Course Title</label>
+          <input type="text" id="title" name="title" required maxlength="100">
+        </div>
+        
+        <div class="form-group">
+          <label for="description">Course Description</label>
+          <textarea id="description" name="description" rows="6" required></textarea>
+        </div>
+        
+        <div class="form-group">
+          <label for="coverImage">Cover Image URL (optional)</label>
+          <input type="text" id="coverImage" name="coverImage" placeholder="https://example.com/image.jpg">
+          <p class="form-help">Leave empty for default image</p>
+        </div>
+        
+        <div class="form-group form-checkbox">
+          <input type="checkbox" id="isPublished" name="isPublished">
+          <label for="isPublished">Publish course immediately</label>
+        </div>
+        
+        <div class="form-buttons">
+          <button type="button" class="btn secondary" id="cancel-btn">Cancel</button>
+          <button type="submit" class="btn primary">Create Course</button>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Collaborative Learning Platform</p>
+  </footer>
+
+  <script>
+    const createCourseForm = document.getElementById('create-course-form');
+    const cancelBtn = document.getElementById('cancel-btn');
+    
+    // Cancel button event
+    cancelBtn.addEventListener('click', () => {
+      window.location.href = '/courses';
+    });
+    
+    // Form submission
+    createCourseForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const title = document.getElementById('title').value;
+      const description = document.getElementById('description').value;
+      const coverImage = document.getElementById('coverImage').value;
+      const isPublished = document.getElementById('isPublished').checked;
+      
+      const courseData = {
+        title,
+        description,
+        isPublished
+      };
+      
+      if (coverImage) {
+        courseData.coverImage = coverImage;
+      }
+      
+      try {
+        const response = await fetch('/api/courses', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(courseData)
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+          alert('Course created successfully!');
+          window.location.href = `/courses/${data.data._id}`;
+        } else {
+          alert(data.message || 'Failed to create course');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        alert('An error occurred while creating the course');
+      }
+    });
+    
+    // Logout handler
+    document.getElementById('logout-link').addEventListener('click', async (e) => {
+      e.preventDefault();
+      
+      try {
+        const response = await fetch('/api/auth/logout', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+
+        const data = await response.json();
+        
+        if (data.success) {
+          window.location.href = '/';
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        alert('An error occurred during logout');
+      }
+    });
+  </script>
+</body>
+</html>
