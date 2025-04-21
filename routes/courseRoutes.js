@@ -7,7 +7,11 @@ const {
   getCourse,
   updateCourse,
   deleteCourse,
-  joinCourse
+  joinCourse,
+  addCourseModule,
+  deleteCourseModule,
+  addModuleResource,
+  deleteModuleResource
 } = require('../controllers/courseController');
 const { protect, authorize } = require('../middleware/auth');
 
@@ -22,5 +26,19 @@ router.route('/:id')
 
 router.route('/:id/join')
   .post(protect, joinCourse);
+
+// Module routes
+router.route('/:id/modules')
+  .post(protect, authorize('teacher', 'admin'), addCourseModule);
+
+router.route('/:id/modules/:moduleIndex')
+  .delete(protect, authorize('teacher', 'admin'), deleteCourseModule);
+
+// Resource routes
+router.route('/:id/modules/:moduleIndex/resources')
+  .post(protect, authorize('teacher', 'admin'), addModuleResource);
+
+router.route('/:id/modules/:moduleIndex/resources/:resourceIndex')
+  .delete(protect, authorize('teacher', 'admin'), deleteModuleResource);
 
 module.exports = router;

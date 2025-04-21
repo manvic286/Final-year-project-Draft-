@@ -1,25 +1,9 @@
 <!-- views/courses.ejs -->
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Courses - Collaborative Learning Platform</title>
-  <link rel="stylesheet" href="/css/style.css">
-  <link rel="stylesheet" href="/css/courses.css">
-</head>
+  <%- include('partials/head') %>
 <body>
-  <header>
-    <h1>Collaborative Learning Platform</h1>
-    <nav>
-      <ul>
-        <li><a href="/dashboard">Dashboard</a></li>
-        <li><a href="/courses" class="active">Courses</a></li>
-        <li><a href="/profile">Profile</a></li>
-        <li><a href="#" id="logout-link">Logout</a></li>
-      </ul>
-    </nav>
-  </header>
+  <%- include('partials/nav') %>
 
   <main>
     <div class="courses-container">

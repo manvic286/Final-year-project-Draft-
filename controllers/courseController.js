@@ -1,5 +1,5 @@
 // controllers/courseController.js
-const Course = require('../models/Course');
+const Course = require('../models/courses');
 const User = require('../models/user');
 
 // @desc    Create a new course
@@ -272,3 +272,189 @@ function generateCourseCode() {
   }
   return code;
 }
+
+// Add these functions to your controllers/courseController.js file
+
+// @desc    Add module to course
+// @route   POST /api/courses/:id/modules
+exports.addCourseModule = async (req, res) => {
+  try {
+    const course = await Course.findById(req.params.id);
+
+    if (!course) {
+      return res.status(404).json({
+        success: false,
+        message: 'Course not found'
+      });
+    }
+
+    // Make sure user is course instructor
+    if (course.instructor.toString() !== req.user.id && req.user.role !== 'admin') {
+      return res.status(401).json({
+        success: false,
+        message: 'Not authorized to update this course'
+      });
+    }
+
+    // Add module to course
+    course.modules.push(req.body);
+    await course.save();
+
+    res.status(200).json({
+      success: true,
+      data: course
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      message: 'Server error'
+    });
+  }
+};
+
+// @desc    Delete module from course
+// @route   DELETE /api/courses/:id/modules/:moduleIndex
+exports.deleteCourseModule = async (req, res) => {
+  try {
+    const course = await Course.findById(req.params.id);
+
+    if (!course) {
+      return res.status(404).json({
+        success: false,
+        message: 'Course not found'
+      });
+    }
+
+    // Make sure user is course instructor
+    if (course.instructor.toString() !== req.user.id && req.user.role !== 'admin') {
+      return res.status(401).json({
+        success: false,
+        message: 'Not authorized to update this course'
+      });
+    }
+
+    // Check if module exists
+    if (!course.modules[req.params.moduleIndex]) {
+      return res.status(404).json({
+        success: false,
+        message: 'Module not found'
+      });
+    }
+
+    // Remove module
+    course.modules.splice(req.params.moduleIndex, 1);
+    await course.save();
+
+    res.status(200).json({
+      success: true,
+      data: course
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      message: 'Server error'
+    });
+  }
+};
+
+// @desc    Add resource to module
+// @route   POST /api/courses/:id/modules/:moduleIndex/resources
+exports.addModuleResource = async (req, res) => {
+  try {
+    const course = await Course.findById(req.params.id);
+
+    if (!course) {
+      return res.status(404).json({
+        success: false,
+        message: 'Course not found'
+      });
+    }
+
+    // Make sure user is course instructor
+    if (course.instructor.toString() !== req.user.id && req.user.role !== 'admin') {
+      return res.status(401).json({
+        success: false,
+        message: 'Not authorized to update this course'
+      });
+    }
+
+    // Check if module exists
+    if (!course.modules[req.params.moduleIndex]) {
+      return res.status(404).json({
+        success: false,
+        message: 'Module not found'
+      });
+    }
+
+    // Add resource to module
+    course.modules[req.params.moduleIndex].resources.push(req.body);
+    await course.save();
+
+    res.status(200).json({
+      success: true,
+      data: course
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      message: 'Server error'
+    });
+  }
+};
+
+// @desc    Delete resource from module
+// @route   DELETE /api/courses/:id/modules/:moduleIndex/resources/:resourceIndex
+exports.deleteModuleResource = async (req, res) => {
+  try {
+    const course = await Course.findById(req.params.id);
+
+    if (!course) {
+      return res.status(404).json({
+        success: false,
+        message: 'Course not found'
+      });
+    }
+
+    // Make sure user is course instructor
+    if (course.instructor.toString() !== req.user.id && req.user.role !== 'admin') {
+      return res.status(401).json({
+        success: false,
+        message: 'Not authorized to update this course'
+      });
+    }
+
+    // Check if module exists
+    if (!course.modules[req.params.moduleIndex]) {
+      return res.status(404).json({
+        success: false,
+        message: 'Module not found'
+      });
+    }
+
+    // Check if resource exists
+    if (!course.modules[req.params.moduleIndex].resources[req.params.resourceIndex]) {
+      return res.status(404).json({
+        success: false,
+        message: 'Resource not found'
+      });
+    }
+
+    // Remove resource
+    course.modules[req.params.moduleIndex].resources.splice(req.params.resourceIndex, 1);
+    await course.save();
+
+    res.status(200).json({
+      success: true,
+      data: course
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      message: 'Server error'
+    });
+  }
+};

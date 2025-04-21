@@ -1,0 +1,280 @@
+/* Course View Styles */
+.course-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .course-header {
+    margin-bottom: 20px;
+  }
+  
+  .course-banner {
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .course-banner-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .course-banner h2 {
+    font-size: 2.2rem;
+    margin-bottom: 10px;
+  }
+  
+  .course-code {
+    font-size: 1rem;
+    opacity: 0.9;
+    margin-bottom: 5px;
+  }
+  
+  .course-instructor {
+    font-size: 1rem;
+    opacity: 0.9;
+  }
+  
+  .course-nav {
+    margin-bottom: 30px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .course-nav ul {
+    display: flex;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+  
+  .course-nav ul li {
+    margin-right: 20px;
+  }
+  
+  .course-nav ul li a {
+    display: block;
+    padding: 12px 0;
+    text-decoration: none;
+    color: #555;
+    font-weight: 500;
+    border-bottom: 3px solid transparent;
+    transition: all 0.3s ease;
+  }
+  
+  .course-nav ul li a:hover {
+    color: #3498db;
+  }
+  
+  .course-nav ul li a.active {
+    color: #3498db;
+    border-bottom: 3px solid #3498db;
+  }
+  
+  .course-section {
+    display: none;
+    padding: 20px 0;
+  }
+  
+  .course-section.active {
+    display: block;
+  }
+  
+  .course-section h3 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .course-description {
+    line-height: 1.6;
+    margin-bottom: 30px;
+  }
+  
+  .course-stats {
+    display: flex;
+    margin-bottom: 30px;
+  }
+  
+  .stat {
+    flex: 1;
+    text-align: center;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #f5f5f5;
+    margin-right: 15px;
+  }
+  
+  .stat:last-child {
+    margin-right: 0;
+  }
+  
+  .stat-number {
+    display: block;
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #3498db;
+  }
+  
+  .stat-label {
+    font-size: 0.9rem;
+    color: #666;
+  }
+  
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .module-item {
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .module-header {
+    padding: 15px 20px;
+    background-color: #f5f5f5;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+  }
+  
+  .module-header h4 {
+    margin: 0;
+    font-size: 1.2rem;
+  }
+  
+  .toggle-module {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #3498db;
+  }
+  
+  .module-content {
+    padding: 20px;
+    display: none;
+  }
+  
+  .module-content p {
+    margin-bottom: 15px;
+  }
+  
+  .resources-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .resource-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .resource-item:last-child {
+    border-bottom: none;
+  }
+  
+  .resource-icon {
+    margin-right: 10px;
+    font-size: 1.2rem;
+  }
+  
+  .resource-link {
+    flex: 1;
+    color: #3498db;
+    text-decoration: none;
+  }
+  
+  .resource-due {
+    font-size: 0.85rem;
+    color: #e74c3c;
+  }
+  
+  .module-actions {
+    margin-top: 15px;
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .module-actions button {
+    margin-left: 10px;
+  }
+  
+  .participants-header {
+    margin: 20px 0 10px;
+  }
+  
+  .participants-header h4 {
+    font-size: 1.4rem;
+    color: #333;
+  }
+  
+  .instructor-info, .students-list {
+    margin-bottom: 30px;
+  }
+  
+  .participant-item {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    margin-bottom: 10px;
+  }
+  
+  .participant-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #3498db;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-right: 15px;
+  }
+  
+  .participant-details {
+    flex: 1;
+  }
+  
+  .participant-name {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .participant-email {
+    font-size: 0.9rem;
+    color: #666;
+  }
+  
+  .empty-message {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    text-align: center;
+    color: #777;
+    font-style: italic;
+  }
