@@ -8,7 +8,7 @@
   <main>
     <div class="form-container">
       <h2>Create New Course</h2>
-      <form id="create-course-form">
+      <form id="create-course-form" action="/api/courses" method="post">
         <div class="form-group">
           <label for="title">Course Title</label>
           <input type="text" id="title" name="title" required maxlength="100">
@@ -79,6 +79,11 @@
           body: JSON.stringify(courseData)
         });
         
+        if (!response.ok) {
+          const error = await response.json();
+          throw new Error(error.message || 'Failed to create course');
+        }
+        
         const data = await response.json();
         
         if (data.success) {
@@ -89,7 +94,7 @@
         }
       } catch (error) {
         console.error('Error:', error);
-        alert('An error occurred while creating the course');
+        alert(error.message || 'An error occurred while creating the course');
       }
     });
     

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('partials/head') %>
+<body>
+  <%- include('partials/nav') %>
+
+  <main>
+    <div class="error-container">
+      <h1>Error</h1>
+      <p><%= message || 'Something went wrong!' %></p>
+      <% if (error && error.status) { %>
+        <p>Status: <%= error.status %></p>
+      <% } %>
+      <a href="/dashboard" class="btn primary">Return Home</a>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Collaborative Learning Platform</p>
+  </footer>
+</body>
+</html>

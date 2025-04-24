@@ -28,11 +28,13 @@ app.set('views', path.join(__dirname, 'views'));
 
 // Import routes
 const authRoutes = require('./routes/authRoutes');
-const courseController = require('./controllers/courseController');
+const courseRoutes = require('./routes/courseRoutes');
+const {courseController, Course} = require('./controllers/courseController');
 const { protect } = require('./middleware/auth');
 
 // Mount API routes
 app.use('/api/auth', authRoutes);
+app.use('/api/courses', courseRoutes);
 
 // Page routes
 app.get('/', (req, res) => {
@@ -131,6 +133,16 @@ app.get('/courses/:id', protect, async (req, res) => {
     console.error(err);
     res.status(500).render('error', { message: 'Server error' });
   }
+});
+
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(err.status || 500).render('error', {
+    message: err.message || 'Something went wrong!',
+    error: { status: err.status || 500 },
+    user: req.user || null,
+    title: 'Error'
+  });
 });
 
 // Start the server
