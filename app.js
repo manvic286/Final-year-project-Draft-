@@ -36,7 +36,7 @@ app.use('/api/auth', authRoutes);
 
 // Page routes
 app.get('/', (req, res) => {
-  res.render('index', { title: 'Collaborative Learning Platform' });
+  res.render('index', { title: 'iLearn' });
 });
 
 app.get('/login', (req, res) => {
@@ -48,7 +48,7 @@ app.get('/register', (req, res) => {
 });
 
 app.get('/dashboard', protect, (req, res) => {
-  res.render('dashboard', { user: req.user });
+  res.render('dashboard', { user: req.user, title: 'Dashboard' });
 });
 
 // Error handling middleware

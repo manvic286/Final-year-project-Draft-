@@ -4,40 +4,90 @@
 <%- include('partials/head') %>
 <body>
   <%- include('partials/nav') %>
-  <div class="container">
+  <div class="container-sm py-4">
     <main>
-      <div class="dashboard-container">
-        <h2>Welcome, <%= user.name %>!</h2>
-        
-        <div class="dashboard-info">
-          <p>Role: <span class="highlight"><%= user.role %></span></p>
-          <p>Email: <%= user.email %></p>
+      <div class="dashboard-container bg-white shadow-sm rounded p-4">
+        <!-- Welcome Section -->
+        <div class="row mb-4">
+          <div class="col">
+            <h2 class="display-6 mb-3">Welcome, <%= user.name %>! 👋</h2>
+            <div class="card bg-light">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-6">
+                    <p class="mb-2">
+                      <i class="fas fa-user-tag text-primary me-2"></i>
+                      Role: <span class="badge bg-primary"><%= user.role %></span>
+                    </p>
+                  </div>
+                  <div class="col-md-6">
+                    <p class="mb-2">
+                      <i class="fas fa-envelope text-primary me-2"></i>
+                      Email: <%= user.email %>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <div class="dashboard-sections row">
-          <div class="dashboard-section col">
-            <h3>My Courses</h3>
-            <% if (user.courses && user.courses.length > 0) { %>
-              <ul class="course-list">
-                <% user.courses.forEach(course => { %>
-                  <li><a href="/courses/<%= course._id %>"><%= course.title %></a></li>
-                <% }); %>
-              </ul>
-            <% } else { %>
-              <p class="empty-message">You're not enrolled in any courses yet.</p>
-              <a href="/courses" class="btn">Browse Courses</a>
-            <% } %>
+        <!-- Dashboard Sections -->
+        <div class="row g-4">
+          <!-- Courses Section -->
+          <div class="col-md-6">
+            <div class="card h-100">
+              <div class="card-header bg-primary text-white">
+                <h3 class="h5 mb-0"><i class="fas fa-book me-2"></i>My Courses</h3>
+              </div>
+              <div class="card-body">
+                <% if (user.courses && user.courses.length > 0) { %>
+                  <div class="list-group">
+                    <% user.courses.forEach(course => { %>
+                      <a href="/courses/<%= course._id %>" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                        <%= course.title %>
+                        <span class="badge bg-primary rounded-pill">
+                          <i class="fas fa-arrow-right"></i>
+                        </span>
+                      </a>
+                    <% }); %>
+                  </div>
+                <% } else { %>
+                  <div class="text-center py-4">
+                    <div class="mb-3">
+                      <i class="fas fa-book-open text-muted" style="font-size: 3rem;"></i>
+                    </div>
+                    <p class="text-muted mb-3">You're not enrolled in any courses yet.</p>
+                    <a href="/courses" class="btn btn-primary">
+                      <i class="fas fa-search me-2"></i>Browse Courses
+                    </a>
+                  </div>
+                <% } %>
+              </div>
+            </div>
           </div>
-          
-          <div class="dashboard-section col">
-            <h3>Recent Activity</h3>
-            <p class="empty-message">No recent activity.</p>
+
+          <!-- Recent Activity Section -->
+          <div class="col-md-6">
+            <div class="card h-100">
+              <div class="card-header bg-primary text-white">
+                <h3 class="h5 mb-0"><i class="fas fa-clock me-2"></i>Recent Activity</h3>
+              </div>
+              <div class="card-body">
+                <div class="text-center py-4">
+                  <div class="mb-3">
+                    <i class="fas fa-history text-muted" style="font-size: 3rem;"></i>
+                  </div>
+                  <p class="text-muted">No recent activity.</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </main>
   </div>
-  <footer>
+  <footer class="container-fluid bg-primary text-white text-center py-3 mt-4">
     <p>&copy; 2025 Collaborative Learning Platform</p>
   </footer>
 
