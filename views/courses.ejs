@@ -1,0 +1,301 @@
+<!-- views/courses.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('partials/head') %>
+<body class="bg-light">
+  <%- include('partials/nav') %>
+
+  <main class="container py-5">
+    <div class="courses-container">
+      <!-- Header Section -->
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="h3 mb-0">Available Courses</h2>
+        <div class="d-flex gap-2">
+          <% if (user.role === 'Teacher' || user.role === 'admin') { %>
+            <a href="/courses/create" class="btn btn-success">
+              <i class="fas fa-plus-circle me-2"></i>Create New Course
+            </a>
+          <% } %>
+          <button class="btn btn-primary" id="join-course-btn">
+            <i class="fas fa-sign-in-alt me-2"></i>Join Course
+          </button>
+        </div>
+      </div>
+
+      <!-- Filters Section -->
+      <div class="row g-3 mb-4">
+        <div class="col-md-8">
+          <div class="input-group">
+            <span class="input-group-text"><i class="fas fa-search"></i></span>
+            <input type="text" class="form-control" id="course-search" placeholder="Search courses...">
+          </div>
+        </div>
+        <div class="col-md-4">
+          <select class="form-select" id="course-sort">
+            <option value="newest">Newest First</option>
+            <option value="oldest">Oldest First</option>
+            <option value="title">Title (A-Z)</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Courses Grid -->
+      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4" id="courses-grid">
+        <!-- Courses will be loaded dynamically -->
+      </div>
+
+      <!-- Pagination -->
+      <nav aria-label="Course pagination" class="mt-4">
+        <ul class="pagination justify-content-center" id="pagination">
+          <!-- Pagination will be added dynamically -->
+        </ul>
+      </nav>
+    </div>
+
+    <!-- Join Course Modal -->
+    <div class="modal fade" id="join-modal" tabindex="-1" aria-labelledby="joinModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="joinModalLabel">Join a Course</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="join-course-form">
+              <div class="mb-3">
+                <label for="course-code" class="form-label">Course Code</label>
+                <input type="text" class="form-control" id="course-code" placeholder="Enter course code" required>
+                <div class="form-text">Enter the course code provided by your instructor</div>
+              </div>
+              <div class="d-grid">
+                <button type="submit" class="btn btn-primary">
+                  <i class="fas fa-sign-in-alt me-2"></i>Join Course
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <%- include('partials/footer') %>
+
+  <script>
+    // Variables
+    let currentPage = 1;
+    const limit = 6;
+    let totalPages = 0;
+    
+    // DOM Elements
+    const coursesGrid = document.getElementById('courses-grid');
+    const pagination = document.getElementById('pagination');
+    const courseSearch = document.getElementById('course-search');
+    const courseSort = document.getElementById('course-sort');
+    const joinCourseForm = document.getElementById('join-course-form');
+    
+    // Load courses when page loads
+    document.addEventListener('DOMContentLoaded', () => {
+      loadCourses();
+    });
+    
+    // Search and sort events
+    courseSearch.addEventListener('input', () => {
+      currentPage = 1;
+      loadCourses();
+    });
+    
+    courseSort.addEventListener('change', () => {
+      currentPage = 1;
+      loadCourses();
+    });
+    
+    // Join course form submission
+    joinCourseForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const courseCode = document.getElementById('course-code').value;
+      
+      try {
+        const response = await fetch('/api/courses/join', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ courseCode })
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+          alert('Successfully joined the course!');
+          window.location.href = `/courses/${data.data._id}`;
+        } else {
+          alert(data.message || 'Failed to join course');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        alert('An error occurred while joining the course');
+      }
+    });
+    
+    // Load courses function
+    async function loadCourses() {
+      const searchTerm = courseSearch.value;
+      const sortOption = courseSort.value;
+      
+      let url = `/api/courses?page=${currentPage}&limit=${limit}`;
+      
+      if (searchTerm) {
+        url += `&title[regex]=${searchTerm}&title[options]=i`;
+      }
+      
+      if (sortOption === 'oldest') {
+        url += '&sort=createdAt';
+      } else if (sortOption === 'title') {
+        url += '&sort=title';
+      } else {
+        url += '&sort=-createdAt';
+      }
+      
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+        
+        if (data.success) {
+          displayCourses(data.data);
+          createPagination(data.pagination);
+          totalPages = Math.ceil(data.count / limit);
+        } else {
+          coursesGrid.innerHTML = '<p class="error">Failed to load courses</p>';
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        coursesGrid.innerHTML = '<p class="error">An error occurred while loading courses</p>';
+      }
+    }
+    
+    // Display courses function
+    function displayCourses(courses) {
+      if (courses.length === 0) {
+        coursesGrid.innerHTML = '<div class="col-12 text-center"><p class="text-muted">No courses found.</p></div>';
+        return;
+      }
+      
+      coursesGrid.innerHTML = '';
+      
+      courses.forEach(course => {
+        const courseCard = document.createElement('div');
+        courseCard.className = 'col';
+        
+        courseCard.innerHTML = `
+          <div class="card h-100 shadow-sm">
+            <img src="${course.coverImage}" class="card-img-top" alt="${course.title}" width="75" height="120">
+            <div class="card-body">
+              <h5 class="card-title">${course.title}</h5>
+              <p class="card-text small text-muted mb-2">Code: ${course.code}</p>
+              <p class="card-text small mb-2">
+                <i class="fas fa-user-tie me-1"></i> ${course.instructor.name}
+              </p>
+              <p class="card-text">${course.description.substring(0, 100)}${course.description.length > 100 ? '...' : ''}</p>
+            </div>
+            <div class="card-footer bg-transparent border-top-0">
+              <a href="/courses/${course._id}" class="btn btn-primary d-block">
+                <i class="fas fa-arrow-right me-2"></i>View Course
+              </a>
+            </div>
+          </div>
+        `;
+        
+        coursesGrid.appendChild(courseCard);
+      });
+    }
+    
+    // Create pagination function
+    function createPagination(paginationData) {
+      pagination.innerHTML = '';
+      
+      if (!paginationData) return;
+      
+      const paginationList = document.createElement('ul');
+      
+      // Previous button
+      const prevBtn = document.createElement('li');
+      prevBtn.innerHTML = '<a href="#">&laquo; Prev</a>';
+      if (!paginationData.prev) {
+        prevBtn.classList.add('disabled');
+      } else {
+        prevBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          currentPage = paginationData.prev.page;
+          loadCourses();
+        });
+      }
+      paginationList.appendChild(prevBtn);
+      
+      // Page numbers
+      for (let i = 1; i <= totalPages; i++) {
+        const pageItem = document.createElement('li');
+        pageItem.innerHTML = `<a href="#">${i}</a>`;
+        
+        if (i === currentPage) {
+          pageItem.classList.add('active');
+        }
+        
+        pageItem.addEventListener('click', (e) => {
+          e.preventDefault();
+          currentPage = i;
+          loadCourses();
+        });
+        
+        paginationList.appendChild(pageItem);
+      }
+      
+      // Next button
+      const nextBtn = document.createElement('li');
+      nextBtn.innerHTML = '<a href="#">Next &raquo;</a>';
+      if (!paginationData.next) {
+        nextBtn.classList.add('disabled');
+      } else {
+        nextBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          currentPage = paginationData.next.page;
+          loadCourses();
+        });
+      }
+      paginationList.appendChild(nextBtn);
+      
+      pagination.appendChild(paginationList);
+    }
+    
+    // Logout handler
+    document.getElementById('logout-link').addEventListener('click', async (e) => {
+      e.preventDefault();
+      
+      try {
+        const response = await fetch('/api/auth/logout', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+
+        const data = await response.json();
+        
+        if (data.success) {
+          window.location.href = '/';
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        alert('An error occurred during logout');
+      }
+    });
+
+    // Update modal handling to use Bootstrap's modal
+    const joinModal = new bootstrap.Modal(document.getElementById('join-modal'));
+    
+    document.getElementById('join-course-btn').addEventListener('click', () => {
+      joinModal.show();
+    });
+  </script>
+</body>
+</html>
