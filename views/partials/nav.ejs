@@ -1,11 +1,40 @@
-<header>
-    <h1>Collaborative Learning Platform</h1>
-    <nav>
-      <ul>
-        <li><a href="/dashboard" class="active">Dashboard</a></li>
-        <li><a href="/courses">Courses</a></li>
-        <li><a href="/profile"><img src="<%= user.profilePicture %>" alt="" class="profile-pic"></a></li>
-        <li><a href="#" id="logout-link">Logout</a></li>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
+  <div class="container-fluid">
+    <a class="navbar-brand fw-bold text-uppercase" href="/dashboard">
+      <img src="/images/logo.png" alt="Logo" width="30" height="30" class="d-inline-block align-text-top me-2">
+      Collaborative Learning Platform
+    </a>
+    
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto align-items-center">
+        <li class="nav-item">
+          <a class="nav-link" href="/dashboard">
+            <i class="fas fa-chart-line me-1"></i> Dashboard
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/courses">
+            <i class="fas fa-book me-1"></i> Courses
+          </a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <img src="<%= user.profilePicture %>" alt="Profile" class="rounded-circle me-2" width="32" height="32">
+            <span>Profile</span>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+            <li><a class="dropdown-item" href="/profile"><i class="fas fa-user me-2"></i>My Profile</a></li>
+            <li><a class="dropdown-item" href="/settings"><i class="fas fa-cog me-2"></i>Settings</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item text-danger" href="#" id="logout-link"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+          </ul>
+        </li>
       </ul>
-    </nav>
-</header>
+    </div>
+  </div>
+</nav>

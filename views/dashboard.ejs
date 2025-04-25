@@ -4,38 +4,39 @@
 <%- include('partials/head') %>
 <body>
   <%- include('partials/nav') %>
-  <main>
-    <div class="dashboard-container">
-      <h2>Welcome, <%= user.name %>!</h2>
-      
-      <div class="dashboard-info">
-        <p>Role: <span class="highlight"><%= user.role %></span></p>
-        <p>Email: <%= user.email %></p>
-      </div>
-
-      <div class="dashboard-sections">
-        <div class="dashboard-section">
-          <h3>My Courses</h3>
-          <% if (user.courses && user.courses.length > 0) { %>
-            <ul class="course-list">
-              <% user.courses.forEach(course => { %>
-                <li><a href="/courses/<%= course._id %>"><%= course.title %></a></li>
-              <% }); %>
-            </ul>
-          <% } else { %>
-            <p class="empty-message">You're not enrolled in any courses yet.</p>
-            <a href="/courses" class="btn">Browse Courses</a>
-          <% } %>
-        </div>
+  <div class="container">
+    <main>
+      <div class="dashboard-container">
+        <h2>Welcome, <%= user.name %>!</h2>
         
-        <div class="dashboard-section">
-          <h3>Recent Activity</h3>
-          <p class="empty-message">No recent activity.</p>
+        <div class="dashboard-info">
+          <p>Role: <span class="highlight"><%= user.role %></span></p>
+          <p>Email: <%= user.email %></p>
+        </div>
+
+        <div class="dashboard-sections row">
+          <div class="dashboard-section col">
+            <h3>My Courses</h3>
+            <% if (user.courses && user.courses.length > 0) { %>
+              <ul class="course-list">
+                <% user.courses.forEach(course => { %>
+                  <li><a href="/courses/<%= course._id %>"><%= course.title %></a></li>
+                <% }); %>
+              </ul>
+            <% } else { %>
+              <p class="empty-message">You're not enrolled in any courses yet.</p>
+              <a href="/courses" class="btn">Browse Courses</a>
+            <% } %>
+          </div>
+          
+          <div class="dashboard-section col">
+            <h3>Recent Activity</h3>
+            <p class="empty-message">No recent activity.</p>
+          </div>
         </div>
       </div>
-    </div>
-  </main>
-
+    </main>
+  </div>
   <footer>
     <p>&copy; 2025 Collaborative Learning Platform</p>
   </footer>

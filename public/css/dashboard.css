@@ -1,5 +1,5 @@
 /* public/css/dashboard.css */
-.dashboard-container {
+/* .dashboard-container {
     max-width: 1000px;
     margin: 0 auto;
     padding: 1rem;
@@ -10,9 +10,9 @@
     margin-bottom: 1.5rem;
     padding-bottom: 0.5rem;
     border-bottom: 2px solid #eee;
-  }
+  } */
   
-  .dashboard-info {
+  /* .dashboard-info {
     background-color: #f8f9fa;
     padding: 1rem;
     border-radius: 8px;
@@ -21,9 +21,9 @@
   
   .dashboard-info p {
     margin-bottom: 0.5rem;
-  }
+  } */
   
-  .highlight {
+  /* .highlight {
     font-weight: bold;
     color: #4a69bd;
     text-transform: capitalize;
@@ -94,4 +94,4 @@
     .dashboard-sections {
       grid-template-columns: 1fr;
     }
-  }
+  } */
