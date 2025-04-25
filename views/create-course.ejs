@@ -72,37 +72,27 @@
       const coverImage = document.getElementById('coverImage').value;
       const isPublished = document.getElementById('isPublished').checked;
       
-      const courseData = {
-        title,
-        description,
-        isPublished
-      };
-      
-      if (coverImage) {
-        courseData.coverImage = coverImage;
-      }
-      
       try {
         const response = await fetch('/api/courses', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify(courseData)
+          body: JSON.stringify({
+            title,
+            description,
+            coverImage,
+            isPublished
+          })
         });
-        
-        if (!response.ok) {
-          const error = await response.json();
-          throw new Error(error.message || 'Failed to create course');
-        }
-        
+
         const data = await response.json();
         
         if (data.success) {
           alert('Course created successfully!');
-          window.location.href = `/courses/${data.data._id}`;
+          window.location.href = '/courses';
         } else {
-          alert(data.message || 'Failed to create course');
+          throw new Error(data.message || 'Failed to create course');
         }
       } catch (error) {
         console.error('Error:', error);

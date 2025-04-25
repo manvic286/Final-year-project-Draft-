@@ -49,7 +49,7 @@ const CourseSchema = new mongoose.Schema({
   },
   coverImage: {
     type: String,
-    default: '/images/default-course.jpg'
+    default: '/images/default-course.webp'
   },
   createdAt: {
     type: Date,
