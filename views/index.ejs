@@ -45,21 +45,76 @@
     </div>
   </nav>
 
-  <div class="container">
+  <header class="bg-primary text-white py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="display-4 fw-bold mb-3">Welcome to iLearn</h1>
+                <p class="lead mb-4">Transform your learning experience with our collaborative platform. Connect, learn, and grow together with students worldwide.</p>
+                <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                    <a href="/register" class="btn btn-light btn-lg px-4 me-md-2">Get Started</a>
+                    <a href="/login" class="btn btn-outline-light btn-lg px-4">Sign In</a>
+                </div>
+            </div>
+            <div class="col-lg-6 d-none d-lg-block">
+                <img src="/images/hero-image.svg" alt="Learning Illustration" class="img-fluid">
+            </div>
+        </div>
+    </div>
+  </header>
 
-    <main>
-      <section class="welcome">
-        <h2>Welcome to our Collaborative Learning Platform</h2>
-        <p>A place where students can learn together, collaborate on projects, and share knowledge.</p>
-      </section>
-    </main>
-  
-    
-  </div>
+  <!-- Features Section -->
+  <section class="py-5">
+      <div class="container">
+          <h2 class="text-center mb-5">Why Choose iLearn?</h2>
+          <div class="row g-4">
+              <div class="col-md-4">
+                  <div class="card h-100 border-0 shadow-sm">
+                      <div class="card-body text-center p-4">
+                          <div class="feature-icon mb-3">
+                              <i class="fas fa-users fa-2x text-primary"></i>
+                          </div>
+                          <h3 class="h5 card-title">Collaborative Learning</h3>
+                          <p class="card-text text-muted">Work together with peers on projects and assignments in real-time.</p>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-md-4">
+                  <div class="card h-100 border-0 shadow-sm">
+                      <div class="card-body text-center p-4">
+                          <div class="feature-icon mb-3">
+                              <i class="fas fa-graduation-cap fa-2x text-primary"></i>
+                          </div>
+                          <h3 class="h5 card-title">Expert Instructors</h3>
+                          <p class="card-text text-muted">Learn from industry professionals and experienced educators.</p>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-md-4">
+                  <div class="card h-100 border-0 shadow-sm">
+                      <div class="card-body text-center p-4">
+                          <div class="feature-icon mb-3">
+                              <i class="fas fa-certificate fa-2x text-primary"></i>
+                          </div>
+                          <h3 class="h5 card-title">Certificates</h3>
+                          <p class="card-text text-muted">Earn recognized certificates upon course completion.</p>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
 
-  <footer class="container-fluid bg-primary text-white text-center py-3 mt-4">
-    <p>&copy; 2025 Collaborative Learning Platform</p>
-  </footer>
+  <!-- Call to Action -->
+  <section class="bg-light py-5">
+      <div class="container text-center">
+          <h2 class="mb-4">Ready to Start Learning?</h2>
+          <p class="lead mb-4">Join thousands of students already learning on iLearn</p>
+          <a href="/register" class="btn btn-primary btn-lg">Create Free Account</a>
+      </div>
+  </section>
+
+  <%- include('partials/footer') %>
 
   <script src="/js/main.js"></script>
 </body>

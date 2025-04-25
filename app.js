@@ -60,16 +60,6 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Course page routes
-app.get('/courses', protect, async (req, res) => {
-  try {
-    res.render('courses', { user: req.user });
-  } catch (err) {
-    console.error(err);
-    res.status(500).render('error', { message: 'Server error' });
-  }
-});
-
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(err.status || 500).render('error', {

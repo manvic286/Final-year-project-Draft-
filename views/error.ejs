@@ -1,22 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <%- include('partials/head') %>
-<body>
+<body class="bg-light">
   <%- include('partials/nav') %>
 
-  <main>
-    <div class="error-container">
-      <h1>Error</h1>
-      <p><%= message || 'Something went wrong!' %></p>
-      <% if (error && error.status) { %>
-        <p>Status: <%= error.status %></p>
-      <% } %>
-      <a href="/dashboard" class="btn primary">Return Home</a>
+  <main class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6 text-center">
+        <div class="card shadow-sm">
+          <div class="card-body p-5">
+            <div class="mb-4">
+              <i class="fas fa-exclamation-circle text-danger" style="font-size: 4rem;"></i>
+            </div>
+            <h1 class="h3 mb-3 text-danger">Error</h1>
+            <p class="text-muted mb-4"><%= message || 'Something went wrong!' %></p>
+            <% if (error && error.status) { %>
+              <p class="text-muted small mb-4">Status Code: <%= error.status %></p>
+            <% } %>
+            <a href="/dashboard" class="btn btn-primary">
+              <i class="fas fa-home me-2"></i>Return to Dashboard
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
   </main>
 
-  <footer>
-    <p>&copy; 2025 Collaborative Learning Platform</p>
-  </footer>
+  <%- include('partials/footer') %>
 </body>
 </html>
