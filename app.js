@@ -30,6 +30,7 @@ app.set('views', path.join(__dirname, 'views'));
 // Import routes
 const authRoutes = require('./routes/authRoutes');
 const { protect } = require('./middleware/auth');
+const Courses = require('./models/courses')
 
 // Mount API routes
 app.use('/api/auth', authRoutes);
@@ -49,6 +50,34 @@ app.get('/register', (req, res) => {
 
 app.get('/dashboard', protect, (req, res) => {
   res.render('dashboard', { user: req.user, title: 'Dashboard' });
+});
+
+app.get('/courses', protect, (req, res) => {
+  Courses.find()
+    .then(courses => {
+      res.render('courses', { user: req.user, title: 'Courses', courses });
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).render('error', { message: 'Error fetching courses', error: err });
+    });
+});
+
+app.get('/courses/create', protect, (req, res) => {
+  res.render('create-course', { user: req.user, title: 'Courses' });
+});
+
+app.post('/courses/create', protect, (req, res) => {
+  const { title, description } = req.body;
+  const newCourse = new Courses({ title, description });
+  newCourse.save()
+    .then(() => {
+      res.redirect('/courses');
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).render('error', { message: 'Error creating course', error: err });
+    });
 });
 
 // Error handling middleware
